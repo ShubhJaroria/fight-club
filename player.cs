@@ -5,6 +5,7 @@ using UnityEngine;
 public class player : MonoBehaviour
 {
     public Animator anim;
+    int refresh=0;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +30,28 @@ public class player : MonoBehaviour
         else
         {
             anim.SetBool("S", false);
+        }
+        if (Input.GetKey(KeyCode.O) && refresh == 0)
+        {
+            anim.Play("hp_straight_A 0", -1, 0f);
+        }
+           
+        else if (Input.GetKey(KeyCode.P) && refresh == 0)
+        {
+            anim.Play("hp_straight_right_A", -1, 0f);
+        }
+        else if (Input.GetKey(KeyCode.K) && refresh == 0)
+        {
+            anim.Play("lk_rh_left_A", -1, 0f);
+        }
+        else if (Input.GetKey(KeyCode.L) && refresh==0)
+        {
+            anim.Play("hk_rh_right_A", -1, 0f);
+        }
+        refresh++;
+        if (refresh == 40)
+        {
+            refresh = 0;
         }
     }
 }
