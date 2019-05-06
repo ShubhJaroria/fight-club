@@ -2,28 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class player : MonoBehaviour
+public class player2 : MonoBehaviour
 {
     public Animator anim;
-    int refresh=0;
+    int refresh = 0;
     int refreshTurn = 0;
-    float z;
-    Vector3 p;
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
-        z = transform.position.z;
-        p.z = z;
     }
 
     // Update is called once per frame
     void Update()
     {
-        p.y = transform.position.y;
-        p.x = transform.position.x;
-        transform.position = p;
-        if(Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W))
         {
             anim.SetBool("W", true);
         }
@@ -41,7 +34,7 @@ public class player : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.I))
         {
-            anim.SetBool("block",true);
+            anim.SetBool("block", true);
         }
         else
         {
@@ -49,25 +42,25 @@ public class player : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.A))
         {
-             anim.SetBool("A",true);
+            anim.SetBool("A", true);
         }
         else
         {
-            anim.SetBool("A",false);
+            anim.SetBool("A", false);
         }
         if (Input.GetKey(KeyCode.D))
         {
-            anim.SetBool("D",true);
+            anim.SetBool("D", true);
         }
         else
         {
-            anim.SetBool("D",false);
+            anim.SetBool("D", false);
         }
         if (Input.GetKey(KeyCode.O) && refresh == 0)
         {
             anim.Play("hp_straight_A 0", -1, 0f);
         }
-           
+
         else if (Input.GetKey(KeyCode.P) && refresh == 0)
         {
             anim.Play("hp_straight_right_A", -1, 0f);
@@ -76,11 +69,11 @@ public class player : MonoBehaviour
         {
             anim.Play("lk_rh_left_A", -1, 0f);
         }
-        else if (Input.GetKey(KeyCode.L) && refresh==0)
+        else if (Input.GetKey(KeyCode.L) && refresh == 0)
         {
             anim.Play("hk_rh_right_A", -1, 0f);
         }
-        
+
         refresh++;
         if (refresh == 40)
         {
