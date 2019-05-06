@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//same as that of first player
 public class player2 : MonoBehaviour
 {
     public Animator anim;
     int refresh = 0;
-    int refreshTurn = 0;
     public Vector3 p; 
     float y;
     public int health;
@@ -91,10 +91,6 @@ public class player2 : MonoBehaviour
             refresh = 0;
             attack = false;
         }
-        refreshTurn++;
-        if (refreshTurn == 60)
-        {
-            refreshTurn = 0;
-        }
+        
     }
 }
