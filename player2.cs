@@ -10,6 +10,7 @@ public class player2 : MonoBehaviour
     public Vector3 p; 
     float y;
     public int health;
+   
     public bool attack = false;
     // Start is called before the first frame update
     void Start()
@@ -24,7 +25,14 @@ public class player2 : MonoBehaviour
     {
         p.y = y;
         anim.SetInteger("health", health);
-        p.z = transform.position.z;
+        if (transform.position.z > 267.15f)
+        {
+            p.z = 267.15f;
+        }
+        else
+        {
+            p.z = transform.position.z;
+        }
         p.x = transform.position.x;
         transform.position = p;
         if (Input.GetKey("left"))
