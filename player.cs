@@ -2,30 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/*This script controls the animations of the first player.
- * including all themotions it exhibits . From punching to walking.
- * This also is responsible for decreasing the health when it receives
- * a hit from the othe player*/
-
 public class player : MonoBehaviour
 {
-    /*The animator class constructs the fsm for animation
-     * health is th eplayers health at any point of time
-     * refresh is the number of frame that must lapse before the player 
-     * does a second set of movements*/
     public Animator anim;
+    public player2 other;
     public int health;
     int refresh=0;
+    int refreshTurn = 0;
     public bool attack = false;
-
-    //position of th player in y as its moving in only one direction
     float y;
+    public bool blocked;
+    public bool crouched;
  
     Vector3 p;
     // Start is called before the first frame update
     void Start()
     {
-        //setting the iitial values
         anim = GetComponent<Animator>();
         y = transform.position.y;             //because animations caused movement in this direction too
         health = 100;
@@ -34,11 +26,8 @@ public class player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //updating the position, helath each time
         p.y = y;
         anim.SetInteger("health", health);
-
-        //this snippet controls the boundaryof the player within the game screen
         if(transform.position.z < 256.5f)
         {
             p.z = 256.5f;
@@ -47,12 +36,13 @@ public class player : MonoBehaviour
         {
             p.z = transform.position.z;
         }
+        if(other.transform.position.z - transform.position.z < 0.8f)
+        {
+            p.z = other.transform.position.z - 0.8f;
+        }
         p.x = transform.position.x;
         transform.position = p;
         
-        /*Settin gthe link between the motions and the keyboard keys
-         * Different sets of keys have different functions*/
-
         if (Input.GetKey(KeyCode.G))
         {
             anim.SetBool("W", true);
@@ -73,10 +63,12 @@ public class player : MonoBehaviour
         {
             anim.SetBool("block",true);
             attack = false;
+            blocked = true;
         }
         else
         {
             anim.SetBool("block", false);
+            blocked = false;
         }
         if (Input.GetKey(KeyCode.Q) && refresh == 0)
         {
@@ -86,6 +78,7 @@ public class player : MonoBehaviour
         else if (Input.GetKey(KeyCode.F) && refresh == 0)
         {
             anim.Play("JumpLoop", -1, 0f);
+            crouched = true;
         }
         else if (Input.GetKey(KeyCode.W) && refresh == 0)
         {
@@ -102,17 +95,19 @@ public class player : MonoBehaviour
             anim.Play("hk_rh_right_A", -1, 0f);
             attack = true;
         }
-        4
-
-            //the maximum value of refresh is 25
-            //whixh means the user must wait for 25 
-            //frames before doing another set of motions
+        
         refresh++;
         if (refresh == 25)                          // so that multiple key presses can't be done at the same time
         {
             refresh = 0;
             attack = false;
+            crouched = false;
         }
-        
+        refreshTurn++;
+        if (refreshTurn == 60)
+        {
+            
+            refreshTurn = 0;
+        }
     }
 }

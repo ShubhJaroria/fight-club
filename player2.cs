@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//same as that of first player
 public class player2 : MonoBehaviour
 {
     public Animator anim;
     int refresh = 0;
+    int refreshTurn = 0;
     public Vector3 p; 
     float y;
     public int health;
-   
+    public bool blocked, crouched;
     public bool attack = false;
     // Start is called before the first frame update
     void Start()
@@ -54,12 +54,15 @@ public class player2 : MonoBehaviour
         if (Input.GetKey("9"))
         {
             anim.SetBool("block", true);
+            blocked = true;
             attack = false;
         }
         else
         {
             anim.SetBool("block", false);
+            blocked = false;
         }
+
         if (Input.GetKey(KeyCode.I) && refresh == 0)
         {
             anim.Play("hp_straight_A 0", -1, 0f);
@@ -68,6 +71,7 @@ public class player2 : MonoBehaviour
         else if (Input.GetKey("down") && refresh == 0)
         {
             anim.Play("JumpLoop", -1, 0f);
+            crouched = true;
         }
         else if (Input.GetKey(KeyCode.O) && refresh == 0)
         {
@@ -90,7 +94,12 @@ public class player2 : MonoBehaviour
         {
             refresh = 0;
             attack = false;
+            crouched = false;
         }
-        
+        refreshTurn++;
+        if (refreshTurn == 60)
+        {
+            refreshTurn = 0;
+        }
     }
 }
