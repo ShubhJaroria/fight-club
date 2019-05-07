@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*This module controls the motions and health of the player 1*/ 
 public class player : MonoBehaviour
 {
+    //Animator is the FSM required for the animation of the player
     public Animator anim;
     public player2 other;
+    //present health of player
     public int health;
     int refresh=0;
     int refreshTurn = 0;
+    //attack anuimations enable a boolean named attack
     public bool attack = false;
     float y;
+    //features include blocking andd crouching
     public bool blocked;
     public bool crouched;
  
@@ -26,6 +31,7 @@ public class player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //updating the position of the player
         p.y = y;
         anim.SetInteger("health", health);
         if(transform.position.z < 256.5f)
@@ -43,6 +49,7 @@ public class player : MonoBehaviour
         p.x = transform.position.x;
         transform.position = p;
         
+        //assigning different keystrokes to each motion
         if (Input.GetKey(KeyCode.G))
         {
             anim.SetBool("W", true);
@@ -95,7 +102,7 @@ public class player : MonoBehaviour
             anim.Play("hk_rh_right_A", -1, 0f);
             attack = true;
         }
-        
+        //updating the frame rate
         refresh++;
         if (refresh == 25)                          // so that multiple key presses can't be done at the same time
         {

@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*This module controls the motions and health of the player 2*/
 public class player2 : MonoBehaviour
 {
+    //Animator is the FSM required for the animation of the player
     public Animator anim;
     int refresh = 0;
     int refreshTurn = 0;
     public Vector3 p; 
     float y;
+    //present health of player
     public int health;
+    //features include blocking andd crouching
     public bool blocked, crouched;
     public bool attack = false;
     // Start is called before the first frame update
@@ -35,6 +39,7 @@ public class player2 : MonoBehaviour
         }
         p.x = transform.position.x;
         transform.position = p;
+        //setting different keys for different motions
         if (Input.GetKey("left"))
         {
             anim.SetBool("W", true);
@@ -88,7 +93,7 @@ public class player2 : MonoBehaviour
             anim.Play("hk_rh_right_A", -1, 0f);
             attack = true;
         }
-
+        //updating the frame rate
         refresh++;
         if (refresh == 25)
         {
